@@ -27,3 +27,7 @@ export const isEmptyObject = (obj) => {
 export const isEmptyValue = (x) => {
   return x === undefined || x === "" || x === null || isEmptyObject(x);
 };
+
+export const compareSortedArrays = (a1, a2) => {
+  return a1.length===a2.length && a1.every((v,i)=> v === a2[i])
+};

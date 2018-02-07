@@ -1,4 +1,21 @@
 {
   "name": "js_data_utils",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "description": "Various functions for cleaning and manipulating data",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/erictmc/js_data_utils.git"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "jest": "^22.2.1",
+    "regenerator-runtime": "^0.11.1"
+  }
 }
