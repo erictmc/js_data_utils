@@ -1,10 +1,10 @@
 
-export const deepCopyObject = (obj) => {
+export const deepCopy = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };
 
 export const renameObjectFieldCopy = (obj, oldName, newName) => {
-  const newObj = deepCopyObject(obj);
+  const newObj = deepCopy(obj);
   if (oldName in newObj) {
     newObj[newName] = newObj[oldName];
     delete newObj[oldName];
