@@ -19,3 +19,11 @@ export const renameObjectFieldMutate = (obj, oldName, newName) => {
   }
 };
 
+export const isEmptyObject = (obj) => {
+  return obj.constructor === Object && Object.keys(obj).length === 0;
+};
+
+
+export const isEmptyValue = (x) => {
+  return x === undefined || x === "" || x === null || isEmptyObject(x);
+};
