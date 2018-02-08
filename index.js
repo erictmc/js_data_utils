@@ -64,3 +64,18 @@ export const isStrNonNegInt = (str) => {
 
   return n !== Infinity && String(n) === newStr && n >= 0;
 };
+
+export const rmObjectEmptiesMutate = (o) => {
+// eslint-disable-next-line prefer-const
+  for (let k in o) {
+    if (!isEmptyValue(o[k]) && typeof o[k] !== "object") {
+      continue;
+    }
+
+    rmObjectEmptiesMutate(o[k]);
+    // The property is an object
+    if (isEmptyValue(o[k])) {
+      delete o[k];
+    }
+  }
+};

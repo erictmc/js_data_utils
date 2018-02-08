@@ -1,8 +1,9 @@
 import {
-  compareSortedArrays, isEmptyValue,
+  compareSortedArrays, deepCopy, isEmptyValue,
   isStrNonNegInt,
   renameObjectFieldCopy,
-  renameObjectFieldMutate
+  renameObjectFieldMutate,
+  rmObjectEmptiesMutate
 } from "./index";
 import {compareObjects} from "./compare_objects";
 
@@ -152,5 +153,37 @@ describe("isStrNonNegInt", () => {
     matches.forEach((n) => {
       expect(isStrNonNegInt(n)).toEqual(true);
     });
+  });
+});
+
+describe("rmObjectEmptiesMutate", () => {
+  it(" should not affect objects with not-empty values", () => {
+    const obj = {a: 1, b: 2, c: {d: 3}};
+    const objCpy = deepCopy(obj);
+
+    rmObjectEmptiesMutate(obj);
+    expect(compareObjects(obj, objCpy)).toEqual(true);
+  });
+
+  it(" should prune nested empty objects", () => {
+    const obj = {
+      a: 1,
+      b: 2,
+      c: {d: {e: undefined, f: "", g: null}},
+      h: undefined
+    };
+
+    const expected = {a: 1, b: 2};
+
+    rmObjectEmptiesMutate(obj);
+    expect(compareObjects(obj, expected)).toEqual(true);
+  });
+
+  it(" should handle empty objects", () => {
+    const obj = {};
+    const expected = {};
+
+    rmObjectEmptiesMutate(obj);
+    expect(compareObjects(obj, expected)).toEqual(true);
   });
 });
