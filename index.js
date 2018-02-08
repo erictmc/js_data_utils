@@ -32,11 +32,19 @@ export const isEmptyObject = (obj) => {
   return obj.constructor === Object && Object.keys(obj).length === 0;
 };
 
+export const isEmptyArray = (arr) => {
+  return arr.constructor === Array && arr.length === 0;
+};
+
 
 export const isEmptyValue = (x) => {
-  return x === undefined || x === "" || x === null || isEmptyObject(x);
+  return x === undefined ||
+    x === "" ||
+    x === null ||
+    isEmptyObject(x) ||
+    isEmptyArray(x);
 };
 
 export const compareSortedArrays = (a1, a2) => {
-  return a1.length===a2.length && a1.every((v,i)=> v === a2[i])
+  return a1.length === a2.length && a1.every((v,i)=> v === a2[i])
 };

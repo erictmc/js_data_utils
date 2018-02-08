@@ -10,7 +10,8 @@
     "eslint-plugin-jest": "^21.7.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "pretest" : "./node_modules/.bin/eslint ."
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
