@@ -65,5 +65,12 @@ describe("compareObjects", () => {
     const obj2 = undefined;
     expect(compareObjects(obj1, obj2)).toEqual(true);
   });
+});
+
+describe("travisFail", () => {
+
+  it(" travis initial example", () => {
+    expect(1+2).toEqual(true);
+  });
 
 });
