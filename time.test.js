@@ -1,5 +1,6 @@
 import {occurOnSameDate, parseClockTime} from "./time";
 
+
 /*
  * Note that test regarding thrown errors do not InvalidTimeError. Rather
  * they use a generic Error. See this thread:
@@ -29,7 +30,8 @@ describe("parseClockTime", () => {
   it(" it should throw an error for invalid input", () => {
     const genericInvalidCases = [
       "",
-      "23:01:00"
+      "23:01:00:00",
+      "23:01:1.0"
     ];
 
     genericInvalidCases.forEach((x) => {
@@ -73,15 +75,21 @@ describe("parseClockTime", () => {
 
   });
 
-  it(" it should handle correctly formatted clock times ", () => {
-    const {hour, minute} = parseClockTime("23:00");
+  it(" it should handle correctly formatted times w/ seconds", () => {
+    const {hours, minutes, seconds} = parseClockTime("23:00");
 
-    expect(hour).toEqual(23);
-    expect(minute).toEqual(0);
+    expect(hours).toEqual(23);
+    expect(minutes).toEqual(0);
+    expect(seconds).toEqual(0);
 
-    expect(() => {
-      parseClockTime("23:00")
-    }).not.toThrow(Error);
+  });
+
+  it(" it should handle correctly formatted times w/o seconds", () => {
+    const {hours, minutes, seconds} = parseClockTime("23:00:10");
+
+    expect(hours).toEqual(23);
+    expect(minutes).toEqual(0);
+    expect(seconds).toEqual(10);
 
   });
 

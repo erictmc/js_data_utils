@@ -1,4 +1,4 @@
-import {isEmptyValue} from "./index";
+import {isEmptyValue, isStrNonNegInt, trimLeadingZeros} from "./index";
 
 import moment from "moment-timezone";
 
@@ -25,9 +25,12 @@ export const occurOnSameDate = (timestamp1, timestamp2) => {
 
 
 /*
- * Takes string clock time and returns parsed hour and minute values
- * @param { string } clockTime : a string of the format 'HH:mm', where
- * hours can range from 0 - 23 and minutes can range from 1 - 59.
+ * Takes string clock time and returns parsed hour and minute
+ * values
+ *
+ * @param { string } clockTime : a string of the format 'HH:mm' or
+ * "HH:mm:ss", wherehours can range from 0 - 23 and minutes can
+ * range from 1 - 59.
  */
 export const parseClockTime = (clockTime) => {
 
@@ -37,21 +40,45 @@ export const parseClockTime = (clockTime) => {
 
   const timeComponents = clockTime.split(":");
 
-  if (timeComponents.length !== 2) {
+  if (timeComponents.length < 2 || timeComponents.length > 3) {
     throw new InvalidTimeError();
   }
 
-  const hour = Number(timeComponents[0]);
-  const minute = Number(timeComponents[1]);
-
-  if (isNaN(hour) || isNaN(minute)) {
+  if (!isStrNonNegInt(timeComponents[0]) ||
+    !isStrNonNegInt(timeComponents[1])) {
     throw new InvalidTimeError();
   }
 
-  if (!(hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59)) {
+  if (timeComponents.length === 3 && !isStrNonNegInt(timeComponents[2])) {
     throw new InvalidTimeError();
   }
 
-  return {hour, minute}
+  const hours = Number(trimLeadingZeros(timeComponents[0]));
+  const minutes = Number(trimLeadingZeros(timeComponents[1]));
+
+  const tmpSec = timeComponents.length === 3
+    ? Number(timeComponents[2]) : undefined;
+
+  if (isNaN(hours) || isNaN(minutes)) {
+    throw new InvalidTimeError();
+  }
+
+  if (tmpSec !== undefined) {
+    if (isNaN(tmpSec)) {
+      throw new InvalidTimeError();
+    }
+
+    if (!(tmpSec >= 0 && tmpSec <= 59)) {
+      throw new InvalidTimeError();
+    }
+  }
+
+  if (!(hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59)) {
+    throw new InvalidTimeError();
+  }
+
+  const seconds = tmpSec === undefined ? 0 : tmpSec;
+
+  return {hours, minutes, seconds}
 
 };

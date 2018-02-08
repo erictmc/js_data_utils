@@ -54,6 +54,9 @@ export const trimLeadingZeros = (str) => {
 };
 
 export const isStrNonNegInt = (str) => {
+  if (isEmptyValue(str) || isNaN(Number(str))) {
+    return false
+  }
 
   // Attempt to strip leading zeros
   const newStr = trimLeadingZeros(str);
