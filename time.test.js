@@ -1,4 +1,10 @@
-import {InvalidTimeError, occurOnSameDate, parseClockTime} from "./time";
+import {occurOnSameDate, parseClockTime} from "./time";
+
+/*
+ * Note that test regarding thrown errors do not InvalidTimeError. Rather
+ * they use a generic Error. See this thread:
+ * https://github.com/facebook/jest/issues/2123
+ */
 
 describe("occurOnSameDate", () => {
 
@@ -29,7 +35,7 @@ describe("parseClockTime", () => {
     genericInvalidCases.forEach((x) => {
       expect(() => {
         parseClockTime(x)
-      }).toThrowError(InvalidTimeError);
+      }).toThrowError(Error);
     });
 
 
@@ -46,7 +52,7 @@ describe("parseClockTime", () => {
     nonNumericalCases.forEach((x) => {
       expect(() => {
         parseClockTime(x)
-      }).toThrowError(InvalidTimeError);
+      }).toThrowError(Error);
     })
 
   });
@@ -62,7 +68,7 @@ describe("parseClockTime", () => {
     infeasibleNumericalCases.forEach((x) => {
       expect(() => {
         parseClockTime(x)
-      }).toThrowError(InvalidTimeError);
+      }).toThrowError(Error);
     });
 
   });
@@ -75,7 +81,7 @@ describe("parseClockTime", () => {
 
     expect(() => {
       parseClockTime("23:00")
-    }).not.toThrow(InvalidTimeError);
+    }).not.toThrow(Error);
 
   });
 

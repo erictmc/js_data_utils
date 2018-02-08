@@ -2,13 +2,7 @@ import {isEmptyValue} from "./index";
 
 import moment from "moment-timezone";
 
-
-/*
- * In order to handle testing with jest, see:
- * https://github.com/facebook/jest/issues/2123
- */
-export const InvalidTimeError = () => {};
-InvalidTimeError.prototype = Object.create(Error.prototype);
+export class InvalidTimeError extends Error {}
 
 /*
  * Determines if two ISO 8601 timestamps occur on the same date
