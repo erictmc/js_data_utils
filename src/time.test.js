@@ -1,4 +1,4 @@
-import {occurOnSameDate, parseClockTime} from "./time";
+import {occurOnSameDate, parseClockTime} from "./index";
 
 
 /*
