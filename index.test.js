@@ -1,5 +1,6 @@
 import {
   compareSortedArrays, isEmptyValue,
+  isStrNonNegInt,
   renameObjectFieldCopy,
   renameObjectFieldMutate
 } from "./index";
@@ -118,5 +119,38 @@ describe("isEmptyValue", () => {
 
   it(" should fail for false (not meant to be falsey)", () => {
     expect(isEmptyValue(false)).toEqual(false)
+  });
+});
+
+describe("isStrNonNegInt", () => {
+  it(" should correctly identify non-matching cases", () => {
+    const nonMatches = [
+      undefined,
+      NaN,
+      null,
+      "foobar",
+      "",
+      "-1",
+      "0.0",
+      "1.0",
+      "-0"
+    ];
+
+    nonMatches.forEach((n) => {
+      expect(isStrNonNegInt(n)).toEqual(false);
+    });
+  });
+
+  it(" should correctly identify matching cases", () => {
+    const matches = [
+      "10",
+      "0",
+      "1",
+      "00"
+    ];
+
+    matches.forEach((n) => {
+      expect(isStrNonNegInt(n)).toEqual(true);
+    });
   });
 });

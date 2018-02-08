@@ -48,3 +48,16 @@ export const isEmptyValue = (x) => {
 export const compareSortedArrays = (a1, a2) => {
   return a1.length === a2.length && a1.every((v,i)=> v === a2[i])
 };
+
+export const trimLeadingZeros = (str) => {
+  return str.replace(/^0+(?!\.|$)/, "");
+};
+
+export const isStrNonNegInt = (str) => {
+
+  // Attempt to strip leading zeros
+  const newStr = trimLeadingZeros(str);
+  const n = Math.floor(Number(newStr));
+
+  return n !== Infinity && String(n) === newStr && n >= 0;
+};
