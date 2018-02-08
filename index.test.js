@@ -1,4 +1,4 @@
-import {compareSortedArrays, renameObjectFieldCopy} from "./index";
+import {compareSortedArrays, renameObjectFieldCopy, renameObjectFieldMutate} from "./index";
 import {compareObjects} from "./compare_objects";
 
 describe('renameObjectFieldCopy', () => {
@@ -17,6 +17,23 @@ describe('renameObjectFieldCopy', () => {
     const origKeys = Object.keys(origObject);
     origKeys.sort();
     expect(compareSortedArrays(origKeys, ["a", "b"])).toEqual(true);
+  });
+
+  it(" should not alter objects where the old and new field names are the same ", () => {
+    const origObject = {a: "1", b: "2"};
+    const newObj = renameObjectFieldCopy(origObject, "a", "a");
+    expect(compareObjects(origObject, newObj)).toEqual(true);
+  });
+});
+
+
+describe('renameObjectFieldMutate', () => {
+
+  it(" should not alter objects where the old and new field names are the same ", () => {
+    const origObject = {a: "1", b: "2"};
+    const expectedObject = {a: "1", b: "2"};
+    const newObj = renameObjectFieldMutate(origObject, "a", "a");
+    expect(compareObjects(origObject, expectedObject)).toEqual(true);
   });
 });
 

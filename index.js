@@ -5,6 +5,11 @@ export const deepCopy = (obj) => {
 
 export const renameObjectFieldCopy = (obj, oldName, newName) => {
   const newObj = deepCopy(obj);
+
+  if (oldName === newName) {
+    return newObj
+  }
+
   if (oldName in newObj) {
     newObj[newName] = newObj[oldName];
     delete newObj[oldName];
@@ -13,6 +18,10 @@ export const renameObjectFieldCopy = (obj, oldName, newName) => {
 };
 
 export const renameObjectFieldMutate = (obj, oldName, newName) => {
+  if (oldName === newName) {
+    return obj
+  }
+
   if (oldName in obj) {
     obj[newName] = obj[oldName];
     delete obj[oldName];
