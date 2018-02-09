@@ -81,10 +81,14 @@ rules:
   lines-around-directive: error
   lines-between-class-members: error
   max-depth: error
-  max-len: warn
+  max-len: 
+     - warn
+     - 90
   max-lines: error
   max-nested-callbacks: error
-  max-params: error
+  max-params: 
+     - error
+     - 4
   max-statements: 'off'
   max-statements-per-line: 
      - error
@@ -146,7 +150,7 @@ rules:
   no-octal-escape: error
   no-param-reassign: error
   no-path-concat: error
-  no-plusplus: error
+  no-plusplus: 'off'
   no-process-env: error
   no-process-exit: error
   no-proto: error
@@ -173,7 +177,7 @@ rules:
   no-undef-init: error
   no-undefined: 'off'
   no-underscore-dangle: error
-  no-unmodified-loop-condition: error
+  no-unmodified-loop-condition: warn
   no-unneeded-ternary: error
   no-unused-expressions: error
   no-use-before-define: error
@@ -224,7 +228,7 @@ rules:
     - error
     - last
   sort-imports: error
-  sort-keys: error
+  sort-keys: 'off'
   sort-vars: error
   space-before-blocks: error
   space-before-function-paren: error

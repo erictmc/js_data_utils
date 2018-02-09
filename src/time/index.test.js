@@ -1,12 +1,14 @@
 import {
   FRIDAY,
   MONDAY,
+  NO_TZ_TIME_FMT,
   SATURDAY,
   SUNDAY,
   THURSDAY,
   TUESDAY,
   WEDNESDAY,
-  convertTimestampToDOW
+  convertTimestampToDOW,
+  createTimeIntervals
 } from "./index";
 
 describe("convertTimestampToDOW", () => {
@@ -34,6 +36,68 @@ describe("convertTimestampToDOW", () => {
       convertTimestampToDOW(input)
     }).toThrow(Error);
 
+  });
+
+});
+
+describe("createTimeIntervals", () => {
+
+  it(" correctly creates intervals where start and end are divisible by interval", () => {
+    const start = "2017-01-01T00:00:00";
+    const end = "2017-01-01T04:00:00";
+    const minutes = 60;
+    const expectedTimes = [
+      "2017-01-01T00:00:00",
+      "2017-01-01T01:00:00",
+      "2017-01-01T02:00:00",
+      "2017-01-01T03:00:00"
+    ];
+
+    const actualTimes = createTimeIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    expect(expectedTimes).toHaveLength(actualTimes.length);
+
+    for (let i = 0; i < expectedTimes - 1; i++) {
+      expect(expectedTimes[i]).toEqual(actualTimes[i]);
+    }
+  });
+
+  it(" correctly creates intervals where start and end " +
+    "are NOT divisible by interval", () => {
+
+    const start = "2017-01-01T00:00:00";
+    const end= "2017-01-01T03:30:00";
+    const minutes = 60;
+    const expectedTimes = [
+      "2017-01-01T00:00:00",
+      "2017-01-01T01:00:00",
+      "2017-01-01T02:00:00",
+      "2017-01-01T03:00:00"
+    ];
+
+    const actualTimes = createTimeIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+
+    expect(expectedTimes).toHaveLength(actualTimes.length);
+    for (let i = 0; i < expectedTimes.length - 1; i++) {
+      expect(expectedTimes[i]).toEqual(actualTimes[i]);
+    }
+  });
+
+  it(" handles cases when neither start nor end time fall on the timeslot", () => {
+    const start = "2017-01-01T00:30:00";
+    const end= "2017-01-01T03:30:00";
+    const minutes = 60;
+    const expectedTimes = [
+      "2017-01-01T00:00:00",
+      "2017-01-01T01:00:00",
+      "2017-01-01T02:00:00",
+      "2017-01-01T03:00:00"
+    ];
+    const actualTimes = createTimeIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+
+    expect(expectedTimes).toHaveLength(actualTimes.length);
+    for (let i = 0; i < expectedTimes.length - 1; i++) {
+      expect(expectedTimes[i]).toEqual(actualTimes[i]);
+    }
   });
 
 });
