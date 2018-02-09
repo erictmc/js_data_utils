@@ -7,6 +7,7 @@ import {
   THURSDAY,
   TUESDAY,
   WEDNESDAY,
+  binTimeStamp,
   convertTimestampToDOW,
   createTimeIntervals
 } from "./index";
@@ -100,4 +101,30 @@ describe("createTimeIntervals", () => {
     }
   });
 
+});
+
+describe("binTimeStamp", () => {
+  it(" should correctly bin timestamp with bins evenly divisible into day", () => {
+    const cases = [
+      {input: "2017-12-01T00:00:00", expected: "2017-12-01T00:00:00", binsPerDay: 24},
+      {input: "2017-12-01T12:00:00", expected: "2017-12-01T12:00:00", binsPerDay: 12},
+      {input: "2017-12-01T11:00:00", expected: "2017-12-01T10:00:00", binsPerDay: 12},
+      {input: "2017-12-01T23:59:00", expected: "2017-12-01T22:00:00", binsPerDay: 12},
+      {input: "2017-12-01T12:45:00", expected: "2017-12-01T12:30:00", binsPerDay: 48}
+    ];
+
+    cases.forEach((t) => {
+      expect(binTimeStamp(t.binsPerDay, t.input)).toEqual(t.expected)
+    });
+  });
+
+  it(" should correctly bin timestamp with bins non-evenly divisible into day", () => {
+    const cases = [
+      {input: "2017-12-01T12:00:00", expected: "2017-12-01T09:36:00", binsPerDay: 5}
+    ];
+
+    cases.forEach((t) => {
+      expect(binTimeStamp(t.binsPerDay, t.input)).toEqual(t.expected)
+    });
+  });
 });

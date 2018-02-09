@@ -75,3 +75,17 @@ export const createTimeIntervals = (start, end, minutesPerInterval, format) => {
 
   return intervals;
 };
+
+export const binTimeStamp = (binsPerDay, timestamp) => {
+  const ts = moment(timestamp);
+  const beginTS = moment(timestamp).set(
+    {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}
+  );
+
+  const minutesPerBin = (24.0 / binsPerDay) * 60;
+  const hoursPerBin = minutesPerBin / 60;
+  const binOffset = Math.floor((ts.hours() + (ts.minutes() / 60)) / hoursPerBin);
+  beginTS.add({minutes: binOffset * minutesPerBin});
+
+  return beginTS.format(NO_TZ_TIME_FMT);
+};

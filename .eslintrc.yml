@@ -14,7 +14,7 @@ rules:
   jest/prefer-to-have-length: warn
   jest/valid-expect: error
   accessor-pairs: error
-  array-bracket-newline: error
+  array-bracket-newline: 'off'
   array-bracket-spacing: error
   array-callback-return: error
   array-element-newline: 'off'
@@ -55,7 +55,9 @@ rules:
   func-style:
     - error
     - expression
-  function-paren-newline: error
+  function-paren-newline: 
+    - warn
+    - consistent
   generator-star-spacing: error
   getter-return: error
   global-require: error
