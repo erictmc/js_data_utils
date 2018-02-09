@@ -1,3 +1,4 @@
 compare_objects.js
 coverage/*
 dist/*
+lib/*
