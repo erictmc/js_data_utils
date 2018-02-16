@@ -44,6 +44,7 @@ export const isEmptyValue = (x) => {
   return x === undefined ||
     x === "" ||
     x === null ||
+    x === "null" ||
     isEmptyObject(x) ||
     isEmptyArray(x);
 };

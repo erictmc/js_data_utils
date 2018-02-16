@@ -128,15 +128,19 @@ describe("isEmptyValue", () => {
     empties.forEach((x) => expect(isEmptyValue(x)).toEqual(true));
   });
 
+  it(" should fail for string \"null\"", () => {
+    expect(isEmptyValue("null")).toEqual(true)
+  });
+
   it(" should fail for a blank string (not meant to be falsey)", () => {
     expect(isEmptyValue(" ")).toEqual(false)
   });
 
-  it(" should fail for zero (not meant to be falsey)", () => {
+  it(" should fail for zero (function does indicate falsiness)", () => {
     expect(isEmptyValue(0)).toEqual(false)
   });
 
-  it(" should fail for false (not meant to be falsey)", () => {
+  it(" should fail for false (function not meant to be falsiness)", () => {
     expect(isEmptyValue(false)).toEqual(false)
   });
 });
