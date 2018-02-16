@@ -1,10 +1,13 @@
 import {
-  compareSortedArrays, deepCopy, isEmptyValue,
+  compareSortedArrays,
+  compareUnsortedArrays,
+  deepCopy, isEmptyValue,
   isStrNonNegInt,
   renameObjectFieldCopy,
   renameObjectFieldMutate,
   rmObjectEmptiesMutate
 } from "./index";
+
 import {compareObjects} from "./compare_objects";
 
 describe("renameObjectFieldCopy", () => {
@@ -69,6 +72,21 @@ describe("compareSortedArrays", () => {
     expect(compareSortedArrays([], [])).toEqual(true);
   });
 });
+
+describe("compareUnsortedArrays", () => {
+
+  it(" should assign equality for sorted arrays", () => {
+    const arr1 = [1, 2, 3];
+    const arr2 = [3, 2, 1];
+
+    expect(compareUnsortedArrays(arr1, arr2)).toEqual(true);
+  });
+
+  it(" should handle empty arrays", () => {
+    expect(compareSortedArrays([], [])).toEqual(true);
+  });
+});
+
 
 describe("compareObjects", () => {
 

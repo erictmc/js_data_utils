@@ -52,6 +52,10 @@ export const compareSortedArrays = (a1, a2) => {
   return a1.length === a2.length && a1.every((v,i)=> v === a2[i])
 };
 
+export const compareUnsortedArrays = (a1, a2) => {
+  return compareSortedArrays([...a1].sort(), [...a2].sort())
+};
+
 export const trimLeadingZeros = (str) => {
   return str.replace(/^0+(?!\.|$)/, "");
 };
