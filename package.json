@@ -11,7 +11,7 @@
   },
   "main": "./lib/index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "pretest": "./node_modules/.bin/eslint .",
     "build": "babel src --presets babel-preset-env --out-dir lib",
     "preinstall": "npm install --ignore-scripts && babel src --presets babel-preset-env --out-dir lib"
