@@ -9,7 +9,7 @@ import {
   WEDNESDAY,
   binTimeStamp,
   convertTimestampToDOW,
-  createTimeIntervals
+  createTimestampIntervals
 } from "./index";
 
 describe("convertTimestampToDOW", () => {
@@ -41,7 +41,7 @@ describe("convertTimestampToDOW", () => {
 
 });
 
-describe("createTimeIntervals", () => {
+describe("createTimestampIntervals", () => {
 
   it(" correctly creates intervals where start and end are divisible by interval", () => {
     const start = "2017-01-01T00:00:00";
@@ -54,7 +54,7 @@ describe("createTimeIntervals", () => {
       "2017-01-01T03:00:00"
     ];
 
-    const actualTimes = createTimeIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
     expect(expectedTimes).toHaveLength(actualTimes.length);
 
     for (let i = 0; i < expectedTimes - 1; i++) {
@@ -75,7 +75,7 @@ describe("createTimeIntervals", () => {
       "2017-01-01T03:00:00"
     ];
 
-    const actualTimes = createTimeIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
 
     expect(expectedTimes).toHaveLength(actualTimes.length);
     for (let i = 0; i < expectedTimes.length - 1; i++) {
@@ -93,12 +93,21 @@ describe("createTimeIntervals", () => {
       "2017-01-01T02:00:00",
       "2017-01-01T03:00:00"
     ];
-    const actualTimes = createTimeIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
 
     expect(expectedTimes).toHaveLength(actualTimes.length);
     for (let i = 0; i < expectedTimes.length - 1; i++) {
       expect(expectedTimes[i]).toEqual(actualTimes[i]);
     }
+  });
+
+  it(" it should handle non-datetime formats", () => {
+    const start = "2017-01-01T00:00:00";
+    const end= "2017-01-01T02:00:00";
+    const minutes = 30;
+    const expectedTimes = ["12:00am", "12:30am", "1:00am", "1:30am"];
+    const actualTimes = createTimestampIntervals(start, end, minutes, "h:mma");
+    expect(actualTimes).toEqual(expectedTimes);
   });
 
 });

@@ -48,6 +48,24 @@ export const getDiffMinutes = (start, end) => {
   return minutesDuration.asMinutes();
 };
 
+
+export const createMomentIntervals = (start, end, minutesPerInterval) => {
+  const sanitizedStartTime = moment(start).set({minutes: 0, seconds: 0, milliseconds: 0});
+
+  const momentObjs = [sanitizedStartTime];
+  const finalEndTime = moment(end);
+  const timeSlotCopy = moment(sanitizedStartTime).clone();
+
+  timeSlotCopy.add({minutes: minutesPerInterval});
+  while (timeSlotCopy.isBefore(finalEndTime)) {
+    momentObjs.push(timeSlotCopy.clone());
+    timeSlotCopy.add({minutes: minutesPerInterval})
+  }
+
+  return momentObjs;
+};
+
+
 /*
  * Creates a range of timestamps between a startTime and endTime, with intervals
  * specified minutesPerInterval.
@@ -56,24 +74,9 @@ export const getDiffMinutes = (start, end) => {
  *  @param { endTime } endTime : ISO 8601 timestamp
  *  @parma { number } minutesPerInterval :
  */
-export const createTimeIntervals = (start, end, minutesPerInterval, format) => {
-  const sanitizedStartTime = moment(start).
-          set({minutes: 0, seconds: 0, milliseconds: 0}).
-            format(format);
-
-  const intervals = [sanitizedStartTime];
-
-  const finalEndTime = moment(end);
-
-  const timeSlotCopy = moment(sanitizedStartTime).clone();
-  timeSlotCopy.add({minutes: minutesPerInterval});
-// eslint-disable-next-line no-unmodified-loop-condition
-  while (timeSlotCopy < finalEndTime) {
-    intervals.push(timeSlotCopy.format(format));
-    timeSlotCopy.add({minutes: minutesPerInterval})
-  }
-
-  return intervals;
+export const createTimestampIntervals = (start, end, minutesPerInterval, outputFormat) => {
+  const momentObjs = createMomentIntervals(start, end, minutesPerInterval);
+  return momentObjs.map((t) => t.format(outputFormat));
 };
 
 export const binTimeStamp = (binsPerDay, timestamp) => {
