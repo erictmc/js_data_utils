@@ -59,7 +59,15 @@ export const createMomentIntervals = (start, end, minutesPerInterval) => {
   timeSlotCopy.add({minutes: minutesPerInterval});
   while (timeSlotCopy.isBefore(finalEndTime)) {
     momentObjs.push(timeSlotCopy.clone());
-    timeSlotCopy.add({minutes: minutesPerInterval})
+    if (minutesPerInterval >= 1440) {
+      timeSlotCopy.add({days: minutesPerInterval / 1440})
+    } else if (minutesPerInterval >= 60) {
+      // Used to prevent double entries as result of daylight savings time
+      timeSlotCopy.set({minutes: minutesPerInterval})
+    } else {
+      timeSlotCopy.add({minutes: minutesPerInterval});
+    }
+
   }
 
   return momentObjs;

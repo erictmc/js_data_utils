@@ -83,6 +83,43 @@ describe("createTimestampIntervals", () => {
     }
   });
 
+  it(" correctly handles DST fallback", () => {
+
+    const start = "2018-11-03T00:00:00";
+    const end= "2018-11-08T00:00:00";
+    const minutes = 1440;
+    const expectedTimes = [
+      "2018-11-03T00:00:00",
+      "2018-11-04T00:00:00",
+      "2018-11-05T00:00:00",
+      "2018-11-06T00:00:00",
+      "2018-11-07T00:00:00"
+    ];
+
+    const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    expect(actualTimes).toEqual(expectedTimes);
+
+  });
+
+  it(" correctly handles DST fallback with hours", () => {
+
+    const start = "2018-11-04T00:00:00";
+    const end= "2018-11-05T02:00:00";
+    const minutes = 60;
+    const expectedTimes = ["2018-11-04T00:00:00", "2018-11-04T01:00:00", "2018-11-04T02:00:00", "2018-11-04T03:00:00",
+      "2018-11-04T04:00:00", "2018-11-04T05:00:00", "2018-11-04T06:00:00", "2018-11-04T07:00:00",
+      "2018-11-04T08:00:00", "2018-11-04T09:00:00", "2018-11-04T10:00:00", "2018-11-04T11:00:00",
+      "2018-11-04T12:00:00", "2018-11-04T13:00:00", "2018-11-04T14:00:00", "2018-11-04T15:00:00",
+      "2018-11-04T16:00:00", "2018-11-04T17:00:00", "2018-11-04T18:00:00", "2018-11-04T19:00:00",
+      "2018-11-04T20:00:00", "2018-11-04T21:00:00", "2018-11-04T22:00:00", "2018-11-04T23:00:00",
+      "2018-11-05T00:00:00", "2018-11-05T01:00:00"
+    ];
+
+    const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    expect(actualTimes).toEqual(expectedTimes);
+
+  });
+
   it(" handles cases when neither start nor end time fall on the timeslot", () => {
     const start = "2017-01-01T00:30:00";
     const end= "2017-01-01T03:30:00";
