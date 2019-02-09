@@ -50,7 +50,7 @@ export const getDiffMinutes = (start, end) => {
 
 
 export const createMomentIntervals = (start, end, minutesPerInterval) => {
-  const sanitizedStartTime = moment(start).set({minutes: 0, seconds: 0, milliseconds: 0});
+  const sanitizedStartTime = moment(start).set({seconds: 0, milliseconds: 0});
 
   const momentObjs = [sanitizedStartTime];
   const finalEndTime = moment(end);

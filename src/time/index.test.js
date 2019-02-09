@@ -56,10 +56,21 @@ describe("createTimestampIntervals", () => {
 
     const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
     expect(expectedTimes).toHaveLength(actualTimes.length);
+    expect(actualTimes).toEqual(expectedTimes);
+  });
 
-    for (let i = 0; i < expectedTimes - 1; i++) {
-      expect(expectedTimes[i]).toEqual(actualTimes[i]);
-    }
+  it(" correctly creates intervals where start does not fall in regular time-interval", () => {
+    const start = "2017-01-01T00:30:00";
+    const end = "2017-01-01T02:00:00";
+    const minutes = 30;
+    const expectedTimes = [
+      "2017-01-01T00:30:00",
+      "2017-01-01T01:00:00",
+      "2017-01-01T01:30:00"
+    ];
+
+    const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
+    expect(actualTimes).toEqual(expectedTimes);
   });
 
   it(" correctly creates intervals where start and end " +
@@ -78,9 +89,8 @@ describe("createTimestampIntervals", () => {
     const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
 
     expect(expectedTimes).toHaveLength(actualTimes.length);
-    for (let i = 0; i < expectedTimes.length - 1; i++) {
-      expect(expectedTimes[i]).toEqual(actualTimes[i]);
-    }
+    expect(actualTimes).toEqual(expectedTimes);
+
   });
 
   it(" correctly handles DST fallback", () => {
@@ -122,20 +132,17 @@ describe("createTimestampIntervals", () => {
 
   it(" handles cases when neither start nor end time fall on the timeslot", () => {
     const start = "2017-01-01T00:30:00";
-    const end= "2017-01-01T03:30:00";
-    const minutes = 60;
+    const end= "2017-01-01T02:30:00";
+    const minutes = 30;
     const expectedTimes = [
-      "2017-01-01T00:00:00",
+      "2017-01-01T00:30:00",
       "2017-01-01T01:00:00",
-      "2017-01-01T02:00:00",
-      "2017-01-01T03:00:00"
+      "2017-01-01T01:30:00",
+      "2017-01-01T02:00:00"
     ];
     const actualTimes = createTimestampIntervals(start, end, minutes, NO_TZ_TIME_FMT);
 
-    expect(expectedTimes).toHaveLength(actualTimes.length);
-    for (let i = 0; i < expectedTimes.length - 1; i++) {
-      expect(expectedTimes[i]).toEqual(actualTimes[i]);
-    }
+    expect(actualTimes).toEqual(expectedTimes);
   });
 
   it(" it should handle non-datetime formats", () => {
